@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120330144129) do
+ActiveRecord::Schema.define(:version => 20150124202827) do
 
   create_table "posts", :force => true do |t|
     t.string   "title"
@@ -34,5 +34,15 @@ ActiveRecord::Schema.define(:version => 20120330144129) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "users", :force => true do |t|
+    t.string   "username",                           :null => false
+    t.boolean  "admin",           :default => false
+    t.string   "password_digest",                    :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+  end
+
+  add_index "users", ["username"], :name => "index_users_on_username", :unique => true
 
 end

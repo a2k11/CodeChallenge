@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_filter :authenticate, :except => [:index, :show]
+  before_filter :check_login
   layout :choose_layout
 
   def index
@@ -110,6 +111,12 @@ class PostsController < ApplicationController
       'admin'
     else
       'application'
+    end
+  end
+
+  def check_login
+    unless current_user
+      redirect_to new_user_path
     end
   end
 end

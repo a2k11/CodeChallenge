@@ -11,7 +11,25 @@
 
 <body class="<%= controller_name %> <%= action_name %>">
   <% unless @no_header %>
-  <header>
+    <header>
+
+      <div>
+        <ol>
+          <% if current_user %>
+            <li>
+              <%= link_to "#{current_user}", session_path, method: :delete %>
+            </li>
+          <% else %>
+            <li>
+              <%= link_to "#{current_user}", new_session_path %>
+            </li>
+            <li>
+              <%= link_to "#{current_user}", new_user_path %>
+            </li>
+          <% end %>
+        </ol>
+      </div>
+
     <h1><%= link_to CONFIG['title'], root_url %></h1>
     <span><%= CONFIG['tagline'].html_safe %></span>
     <ul>
