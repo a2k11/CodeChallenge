@@ -1,0 +1,32 @@
+<%= form_for @user do |f| %>
+  <% if @user.errors.any? %>
+    <div>
+      <h2>Form Invalid</h2>
+      <ul>
+        <% @user.errors.full_messages do |message| %>
+          <li>
+            <%= message %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :username %>
+    <%= f.text_field :username %>
+  </div>
+  <div>
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  </div>
+  <div>
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation %>
+  </div>
+  <div>
+    <%= f.submit "Create Account" %>
+  </div>
+<% end %>
+
+

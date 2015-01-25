@@ -1,14 +1,15 @@
 class ApplicationController < ActionController::Base
+  attr_reader :status
   protect_from_forgery
+  helper_method :current_user
 
   private
 
-  def authenticate
-    authenticate_or_request_with_http_basic do |login, password|
-      if login == CONFIG['login'] and password == CONFIG['password']
-      	session[:admin] = true
-      	true
-      end
+  def current_user
+    if session[:user_id]
+      true
+    else
+      false
     end
   end
 end

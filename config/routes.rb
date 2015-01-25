@@ -1,4 +1,8 @@
 TestApp::Application.routes.draw do
+
+  resources :users, only: [:new, :create]
+  resource :session, only: [:new, :create, :destroy]
+
   resources :posts
   match '/admin', :to => 'posts#admin'
   match '/new', :to => 'posts#new'
@@ -8,5 +12,7 @@ TestApp::Application.routes.draw do
   get '/:slug', :to => 'posts#show', :as => 'post'
   delete '/:slug', :to => 'posts#destroy', :as  => 'post'
   put '/:slug', :to => 'posts#update', :as  => 'post'
-  root :to => 'posts#index'
+  root :to => 'users#new'
+
+
 end

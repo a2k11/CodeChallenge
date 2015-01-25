@@ -10,7 +10,7 @@ gem 'jquery-rails', '~> 2'
 gem 'redcarpet'
 
 # Misc libraries
-# gem 'bcrypt-ruby', '~> 3', require: 'bcrypt'
+gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'stringex', '~> 1', git: 'git://github.com/rsl/stringex.git'
 gem 'kaminari', '~> 0.13'
 
