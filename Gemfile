@@ -1,18 +1,18 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 3'
-
-# Extention libraries
-gem 'thin', '~> 1'
-
-# Rendering engines and vendor libraries
-gem 'jquery-rails', '~> 2'
-gem 'redcarpet'
-
-# Misc libraries
 gem 'bcrypt-ruby', '~> 3.0.0'
-gem 'stringex', '~> 1', git: 'git://github.com/rsl/stringex.git'
-gem 'kaminari', '~> 0.13'
+gem 'bourbon'
+gem 'coffee-rails'
+gem 'jquery-rails', '~> 2'
+gem 'kaminari'
+gem 'neat'
+gem 'rails', '~> 3'
+gem 'redcarpet'
+gem 'sass-rails'
+gem 'sprockets'
+gem 'stringex', git: 'git://github.com/rsl/stringex.git'
+gem 'thin', '~> 1'
+gem 'uglifier', '~> 1'
 
 group :production do
   # gem 'newrelic_rpm', '~> 3'
@@ -37,13 +37,8 @@ end
 
 group :development, :test do
   gem 'foreman', '~> 0.40'
-  gem 'sqlite3', '~> 1', platform: [:ruby, :mswin, :mingw]
+  gem 'sqlite3'
   gem 'faker', '~> 1'
-  gem 'factory_girl_rails', '~> 1'
+  #  gem 'factory_girl_rails', '~> 1'
 end
 
-group :assets do
-  gem 'sass-rails', '~> 3'
-  gem 'coffee-rails', '~> 3'
-  gem 'uglifier', '~> 1'
-end
