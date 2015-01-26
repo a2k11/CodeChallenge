@@ -11,26 +11,26 @@
   </head>
 
   <header class="header">
-    <h1>
-      <%= link_to "Bloggr", root_url %>
-    </h1>
-    <h2>A Blogging Application</h2>
+    <div class="title">
+      <h1>
+        <%= link_to "Bloggr", root_url %> ~~~ A Blogging Application
+      </h1>
+    </div>
 
     <div class="navigation">
       <ul class="login">
-        <li>
-          <time>
-            <% if @post && @post.created_at %>
-              Posted <%= @post.created_at.to_formatted_s(:day_month_year) %>
-            <% else %>
-              <%= Time.now.to_formatted_s(:day_month_year) %>
-            <% end %>
-          </time>
-        </li>
         <% if signed_in %>
           <li>
             <%= link_to "Sign Out", session_path, method: :delete %>
           </li>
+          <li>
+            <%= link_to "My Dashboard", index_path %>
+          </li>
+          <% if is_admin %>
+            <li>
+              <%= link_to "Admin Page", admin_path %>
+            </li>
+          <% end %>
         <% else %>
           <li>
             <%= link_to "Sign In", new_session_path %>
@@ -40,32 +40,31 @@
           </li>
         <% end %>
       </ul>
-      <div class="admin">
-        <% if signed_in && is_admin %>
-          <%= link_to "Admin Page", new_post_path %>
-        <% end %>
-      </div>
     </div>
   </header>
 
-  <body class="container">
+  <nav class="sidebar">
     <ul>
+      <h4>Recent Tags</h4>
       <li>
-        <%= link_to "@yourtwitter",
-                    "http://twitter.com/" + CONFIG["twitter"] %>
+        hippo
       </li>
       <li>
-        <%= link_to "github", "https://github.com/" + CONFIG["github"] %>
+        <%= link_to "twitter", "http://twitter.com/" %>
       </li>
       <li>
-        <%= link_to "say hi",
-                    "mailto:#{CONFIG["email"]}?subject:whats up!" %>
+        <%= link_to "github", "https://github.com/" %>
+      </li>
+      <li>
+        <%= link_to "email", "mailto:email?subject:hello" %>
       </li>
       <li>
         <%= link_to "rss feed", "/posts.rss" %>
       </li>
     </ul>
+  </nav>
 
+  <body class="container">
     <%= yield %>
   </body>
 </html>

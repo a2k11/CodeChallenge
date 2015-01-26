@@ -1,0 +1,17 @@
+<div class="innercontainer">
+
+<ul>
+  <li>
+  <%= link_to "twitter", "http://twitter.com/#{current_user.twitter}" %>
+  </li>
+  <li>
+  <%= link_to "github", "https://github.com/#{current_user.github}" %>
+  </li>
+  <li>
+  <%= link_to "email", "mailto:#{current_user.email}?subject:hello" %>
+  </li>
+  <li>
+  <%= link_to "rss feed", "/posts.rss" %>
+  </li>
+</ul>
+</div>

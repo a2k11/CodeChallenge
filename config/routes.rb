@@ -1,10 +1,11 @@
 TestApp::Application.routes.draw do
 
-  resources :users, only: [:new, :create]
+  resources :users, only: [:new, :create, :update]
   resource :session, only: [:new, :create, :destroy]
 
   resources :posts
-  match '/admin', :to => 'posts#admin'
+  match "/admin", to: "dashboards#admin"
+  match "/index", to: "dashboards#index"
   match '/new', :to => 'posts#new'
   match '/edit/:id', :to => 'posts#edit'
   post '/preview', :to => 'posts#preview'

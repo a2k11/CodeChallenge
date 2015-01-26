@@ -1,13 +1,15 @@
-<%= form_for :session, url: session_path do |f| %>
-  <fieldset>
-    <%= f.label :username %>
-    <%= f.text_field :username %>
-  </fieldset>
-  <fieldset>
-    <%= f.label :password %>
-    <%= f.password_field :password %>
-  </fieldset>
-  <div>
-    <%= f.submit "Log In" %>
-  </div>
-<% end %>
+<div class="innercontainer">
+  <%= form_for :session, url: session_path do |f| %>
+    <fieldset>
+      <%= f.label :username %>
+      <%= f.text_field :username %>
+    </fieldset>
+    <fieldset>
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+    </fieldset>
+    <div>
+      <%= f.submit "Log In" %>
+    </div>
+  <% end %>
+</div>

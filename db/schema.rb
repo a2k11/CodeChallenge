@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150124202827) do
+ActiveRecord::Schema.define(:version => 20150126131604) do
 
   create_table "posts", :force => true do |t|
     t.string   "title"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(:version => 20150124202827) do
     t.boolean  "aside",      :default => false
     t.string   "url"
     t.integer  "parent"
+    t.integer  "user_id"
   end
 
   create_table "sessions", :force => true do |t|
@@ -36,11 +37,14 @@ ActiveRecord::Schema.define(:version => 20150124202827) do
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "users", :force => true do |t|
-    t.string   "username",                           :null => false
+    t.string   "username",                                      :null => false
     t.boolean  "admin",           :default => false
-    t.string   "password_digest",                    :null => false
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
+    t.string   "password_digest",                               :null => false
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
+    t.string   "twitter",         :default => "Twitter",        :null => false
+    t.string   "github",          :default => "Github",         :null => false
+    t.string   "email",           :default => "user@email.com", :null => false
   end
 
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true

@@ -1,14 +1,17 @@
 class ApplicationController < ActionController::Base
-  attr_accessor :status
   protect_from_forgery
   helper_method :current_user, :signed_in, :is_admin
 
   def current_user
-    @current_user ||= User.find_by_id(session[:user_id])
+    if (session[:user_id])
+      User.find(session[:user_id])
+    else
+      Guest.new
+    end
   end
 
   def is_admin
-    if current_user.admin
+    if current_user.admin == true
       true
     else
       false
@@ -16,6 +19,22 @@ class ApplicationController < ActionController::Base
   end
 
   def signed_in
-    current_user != nil
+    unless current_user.id
+      false
+    else
+      true
+    end
+  end
+
+  def authenticate_admin
+    unless is_admin
+      redirect_to root_path
+    end
+  end
+
+  def authenticate_user
+    unless signed_in
+      redirect_to root_path
+    end
   end
 end

@@ -1,7 +1,10 @@
 class User < ActiveRecord::Base
-  attr_accessible :admin, :password, :password_confirmation, :username
   has_secure_password
+  has_many :posts
 
-  validates :password, presence: true
+  attr_accessible :admin, :password, :password_confirmation, :email,
+                  :github, :twitter, :username
+
+  validates :password, presence: { on: :create }
   validates :username, presence: true, uniqueness: true
 end
