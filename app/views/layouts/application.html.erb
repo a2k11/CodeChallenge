@@ -1,66 +1,71 @@
-<!doctype html>
-<html lang="en-US">
-<head>
-  <title><%= html_title yield(:title) %></title>
-  <%= csrf_meta_tag %>
-  <%= stylesheet_link_tag 'application' %>
-  <meta name="author" content="<%= CONFIG['name'] %>">
-  <link href="/posts.rss" rel="alternate" title="RSS" type="application/rss+xml" />
-  <link href='http://fonts.googleapis.com/css?family=Lato:300,900' rel='stylesheet' type='text/css' />
-</head>
+<html>
+  <head>
+    <title>Bloggr</title>
+    <%= csrf_meta_tag %>
+    <%= stylesheet_link_tag "application", media: "all" %>
+    <link href="/posts.rss" rel="alternate" title="RSS" 
+          type="application/rss+xml" />
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,900"
+          rel="stylesheet" type="text/css" />
+    <%= javascript_include_tag "application" %>
+  </head>
 
-<body class="<%= controller_name %> <%= action_name %>">
-  <% unless @no_header %>
-    <header>
+  <header class="header">
+    <h1>
+      <%= link_to "Bloggr", root_url %>
+    </h1>
+    <h2>A Blogging Application</h2>
 
-      <div>
-        <ol>
-          <% if current_user %>
-            <li>
-              <%= link_to "#{current_user}", session_path, method: :delete %>
-            </li>
-          <% else %>
-            <li>
-              <%= link_to "#{current_user}", new_session_path %>
-            </li>
-            <li>
-              <%= link_to "#{current_user}", new_user_path %>
-            </li>
-          <% end %>
-        </ol>
+    <div class="navigation">
+      <ul class="login">
+        <li>
+          <time>
+            <% if @post && @post.created_at %>
+              Posted <%= @post.created_at.to_formatted_s(:day_month_year) %>
+            <% else %>
+              <%= Time.now.to_formatted_s(:day_month_year) %>
+            <% end %>
+          </time>
+        </li>
+        <% if signed_in %>
+          <li>
+            <%= link_to "Sign Out", session_path, method: :delete %>
+          </li>
+        <% else %>
+          <li>
+            <%= link_to "Sign In", new_session_path %>
+          </li>
+          <li>
+            <%= link_to "Sign Up", new_user_path %>
+          </li>
+        <% end %>
+      </ul>
+      <div class="admin">
+        <% if signed_in && is_admin %>
+          <%= link_to "Admin Page", new_post_path %>
+        <% end %>
       </div>
-
-    <h1><%= link_to CONFIG['title'], root_url %></h1>
-    <span><%= CONFIG['tagline'].html_safe %></span>
-    <ul>
-      <% if CONFIG['twitter'] %>
-        <li><%= link_to '@' + CONFIG['twitter'], 'http://twitter.com/' + CONFIG['twitter'] %></li>
-      <% end %>
-      <% if CONFIG['github'] %>
-        <li><%= link_to 'github', 'https://github.com/' + CONFIG['github'] %></li>
-      <% end %>
-      <% if CONFIG['email'] %>
-        <li><%= link_to 'say hi', "mailto:#{CONFIG['email']}?subject:whats up!" %></li>
-      <% end %>
-      <li><%= link_to 'rss feed', '/posts.rss' %></li>
-    </ul>
-    <span class="powered-by">
-      <% if is_admin? %> &nbsp;&middot;&nbsp; <a href="/admin">Admin</a><% end %>
-  </span>
-
-  </header>
-  <% end %>
-
-  <div id="container">
-    <% unless @no_header %>
-      <time><% if @post && @post.created_at %>Posted <%= @post.created_at.to_formatted_s(:day_month_year) %><% else %><%= Time.now.to_formatted_s(:day_month_year) %><% end %></time>
-    <% end %>
-    <div id="content">
-      <% if notice %><span class="notice"><%= notice %></span><% end %>
-      <%= yield %>
     </div>
-  </div>
+  </header>
 
-  <%= javascript_include_tag 'application' %>
-</body>
+  <body class="container">
+    <ul>
+      <li>
+        <%= link_to "@yourtwitter",
+                    "http://twitter.com/" + CONFIG["twitter"] %>
+      </li>
+      <li>
+        <%= link_to "github", "https://github.com/" + CONFIG["github"] %>
+      </li>
+      <li>
+        <%= link_to "say hi",
+                    "mailto:#{CONFIG["email"]}?subject:whats up!" %>
+      </li>
+      <li>
+        <%= link_to "rss feed", "/posts.rss" %>
+      </li>
+    </ul>
+
+    <%= yield %>
+  </body>
 </html>

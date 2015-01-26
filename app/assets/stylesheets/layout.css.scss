@@ -1,0 +1,67 @@
+
+// HEADER
+
+.header {
+  @include outer-container;
+  color: black;
+  margin-top: 1em;
+
+  a {
+    color: black;
+    &:hover {
+      color: white;
+    }
+  }
+
+  .navigation {
+    @include align-items(center);
+    @include display(flex);
+    margin-left: 10em;
+    padding-bottom: (10 / 2);
+    padding-top: (10 / 2);
+    width: 100%;
+  }
+
+  .login {
+    li {
+      display: inline-block;
+      margin-right: (5em / 2);
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+  .admin {
+    margin-left: 10em;
+  }
+}
+
+// BODY
+
+body {
+  @include linear-gradient(to left, orange, blue);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  max-width: 100%;
+  overflow-x: hidden;
+  color: black;
+}
+
+.container {
+  @include outer-container;
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
+fieldset {
+  border-color: black;
+  width: 50%;
+  padding-top: 0em;
+  padding-bottom: 0em;
+  margin-top: .5em;
+  margin-bottom: .5em;
+}
+
+.form {
+  width: 50%;
+}
