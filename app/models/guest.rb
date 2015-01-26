@@ -1,10 +1,12 @@
 class Guest
+  def error
+  end
   def id
-    0
+    false
   end
 
   def username
-    "Guest"
+    "Welcome Guest"
   end
 
   def admin

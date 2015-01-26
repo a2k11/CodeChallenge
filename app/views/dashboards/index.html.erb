@@ -1,0 +1,69 @@
+<div class="contentcontainer">
+  <h2> <%= "Welcome to your Dashboard, #{@user.username}" %> </h2>
+
+  <div>
+    <div class="links">
+      <h3>Your Links</h3>
+      <div>
+        <%= link_to "Edit Twitter: #{@user.twitter}" %>
+      </div>
+      <div>
+        <%= link_to "github", "https://github.com/#{@user.github}" %>
+      </div>
+      <div>
+        <%= link_to "email", "mailto:#{@user.email}?subject:hello" %>
+      </div>
+      <div>
+        <%= link_to "rss feed", "/posts.rss" %>
+      </div>
+    </div>
+
+    <div class="editaccount">
+      <h3>Edit Your Account Details</h3>
+      <%= form_for @user do |f| %>
+        <fieldset>
+          <%= f.label "Twitter" %>
+          <%= f.text_field :twitter, placeholder: "#{@user.twitter}" %>
+        </fieldset>
+        <fieldset>
+          <%= f.label "GitHub" %>
+          <%= f.text_field :github, placeholder: "#{@user.github}" %>
+        </fieldset>
+        <fieldset>
+          <%= f.label "Email" %>
+          <%= f.text_field :email, placeholder: "#{@user.email}" %>
+        </fieldset>
+        <div>
+          <%= f.submit "Update Account" %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="userposts">
+      <h3>Your Blog Posts</h3>
+      <ul>
+        <li>
+          <%= link_to "Create Post", new_path %>
+        </li>
+        <% @posts.each do |post| %>
+          <fieldset>
+            <li>
+              <%= link_to post.title, post_path %>
+            </li>
+            <li>
+              <%= link_to "Edit Post", post_path %>
+            </li>
+            <li>
+              <%= link_to "Edit Post", post_path, method: :delete %>
+            </li>
+            <li>
+              <time>
+                <%= post.created_at.to_formatted_s(:day_month_year) %>
+              </time>
+            </li>
+          </fieldset>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
