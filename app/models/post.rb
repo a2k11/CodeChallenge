@@ -1,9 +1,11 @@
 class Post < ActiveRecord::Base
+  attr_accessible :tag_list, :title, :slug, :content, :url, :draft
+  acts_as_ordered_taggable
+  acts_as_url :title, :url_attribute => :slug
   belongs_to :user
 
   validates :title, presence: true
   validates :slug, presence: true, uniqueness: true
-  acts_as_url :title, :url_attribute => :slug
 
   default_scope order('created_at desc')
 

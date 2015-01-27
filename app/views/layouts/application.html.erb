@@ -24,7 +24,7 @@
             <%= link_to "Sign Out", session_path, method: :delete %>
           </li>
           <li>
-            <%= link_to "My Dashboard", index_path %>
+            <%= link_to "My Dashboard", dashboard_path %>
           </li>
           <% if is_admin %>
             <li>
@@ -44,23 +44,18 @@
   </header>
 
   <nav class="sidebar">
+    <%= form_tag search_path, method: :get do %>
+      <%= search_field_tag :search, params[:search],
+          placeholder: "SEARCH" %>
+    <% end %>
     <ul>
       <h4>Recent Tags</h4>
-      <li>
-        hippo
-      </li>
-      <li>
-        <%= link_to "twitter", "http://twitter.com/" %>
-      </li>
-      <li>
-        <%= link_to "github", "https://github.com/" %>
-      </li>
-      <li>
-        <%= link_to "email", "mailto:email?subject:hello" %>
-      </li>
-      <li>
-        <%= link_to "rss feed", "/posts.rss" %>
-      </li>
+      <% @tags.each do |tag| %>
+        <li>
+          <%= link_to "#{tag.name}   #{tag.taggings_count}",
+              tag_search_path(tag.name) %>
+        </li>
+      <% end %>
     </ul>
   </nav>
 

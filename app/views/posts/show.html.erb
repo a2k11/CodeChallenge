@@ -1,4 +1,9 @@
-<%- content_for(:title) { @post.title } -%>
-<%- content_for(:page_title) { linked_title } -%>
-
-<%= render @post %>
+<div class="postscontent">
+  <div>
+    <%- content_for(:title) { @post.title } -%>
+    <%- content_for(:page_title) { linked_title } -%>
+  </div>
+  <div class="showpost">
+    <%= render @post %>
+  </div>
+</div>

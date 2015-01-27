@@ -11,7 +11,7 @@ class UsersController < ApplicationController
       if user.admin
         redirect_to admin_path
       else
-        redirect_to index_path
+        redirect_to dashboard_path
       end
     else
       render :new
@@ -22,7 +22,7 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
 
     if user.update_attributes(params[:user])
-      redirect_to index_path
+      redirect_to dashboard_path
     else
       redirect_to :back
     end

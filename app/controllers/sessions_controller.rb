@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
       if user.admin
         redirect_to admin_path
       else
-        redirect_to index_path
+        redirect_to dashboard_path
       end
     else
       render :new

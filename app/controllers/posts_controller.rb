@@ -1,60 +1,23 @@
 class PostsController < ApplicationController
-  before_filter :authenticate, :except => [:index, :show]
-  before_filter :check_login
-  layout :choose_layout
+  before_filter :authenticate_user, only: [:new, :create, :destroy]
 
   def index
     @posts = Post.page(params[:page]).per(10).where(draft:false)
-
-    respond_to do |format|
-      format.html
-      format.xml { render :xml => @posts }
-      format.rss { render :layout => false }
-    end
   end
 
   def preview
     @post = Post.new(params[:post])
     @preview = true
-    respond_to do |format|
-      format.html { render 'show' }
-    end
-  end
-
-  def admin
-    @no_header = true
-    @post = Post.new
-    @published = Post.where(draft:false).page(params[:post_page]).per(20)
-    @drafts = Post.where(draft:true).page(params[:draft_page]).per(20)
-
-    respond_to do |format|
-      format.html
-    end
+    render :show
   end
 
   def show
     @single_post = true
-    @post = admin? ? Post.find_by_slug(params[:slug]) : Post.find_by_slug_and_draft(params[:slug],false)
-
-    respond_to do |format|
-      if @post.present?
-        format.html
-        format.xml { render :xml => @post }
-      else
-        format.any { head status: :not_found  }
-      end
-    end
+    @post = Post.find_by_slug(params[:slug])
   end
 
   def new
-    @no_header = true
-    @posts = Post.page(params[:page]).per(20)
     @post = Post.new
-
-    respond_to do |format|
-      format.html
-      format.xml { render xml: @post }
-    end
   end
 
   def edit
@@ -63,30 +26,24 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(params[:post])
+    @post = current_user.posts.new(params[:post])
+    generate_tags
 
-    respond_to do |format|
-      if @post.save
-        format.html { redirect_to "/edit/#{@post.id}", :notice => "Post created successfully" }
-        format.xml { render :xml => @post, :status => :created, location: @post }
-      else
-        format.html { render :action => 'new' }
-        format.xml { render :xml => @post.errors, :status => :unprocessable_entity}
-      end
+    if @post.save
+      redirect_to dashboard_path
+    else
+      redirect_to :new
     end
   end
 
   def update
     @post = Post.find_by_slug(params[:slug])
 
-    respond_to do |format|
-      if @post.update_attributes(params[:post])
-        format.html { redirect_to "/edit/#{@post.id}", :notice => "Post updated successfully" }
-        format.xml { head :ok }
-      else
-        format.html { render :action => 'edit' }
-        format.xml { render :xml => @post.errors, :status => :unprocessable_entity}
-      end
+    if @post.update_attributes(params[:post])
+      generate_tags
+      redirect_to dashboard_path, notice: "Post updated successfully"
+    else
+      redirect_to post_path(@post.id), action: :edit
     end
   end
 
@@ -94,29 +51,18 @@ class PostsController < ApplicationController
     @post = Post.find_by_slug(params[:slug])
     @post.destroy
 
-    respond_to do |format|
-      format.html { redirect_to '/admin' }
-      format.xml { head :ok }
-    end
+    redirect_to dashboard_path
   end
 
   private
 
-  def admin?
-    session[:admin] == true
-  end
+  def generate_tags
+    if params[:post][:tag_list].exists?
+      @post.tag_list.remove(params[:post][:tag_list])
 
-  def choose_layout
-    if ['admin', 'new', 'edit', 'create'].include? action_name
-      'admin'
-    else
-      'application'
-    end
-  end
-
-  def check_login
-    unless current_user
-      redirect_to new_user_path
+      (params[:post][:tag_list]).to_s.split(/\s+/).each do |tag|
+        @post.tag_list.add(tag.downcase).uniq
+      end
     end
   end
 end

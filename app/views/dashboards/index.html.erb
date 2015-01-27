@@ -43,18 +43,18 @@
       <h3>Your Blog Posts</h3>
       <ul>
         <li>
-          <%= link_to "Create Post", new_path %>
+          <%= button_to "Create Post", new_path, method: :get %>
         </li>
         <% @posts.each do |post| %>
           <fieldset>
             <li>
-              <%= link_to post.title, post_path %>
+            <%= link_to post.title, post_path(post) %>
             </li>
             <li>
-              <%= link_to "Edit Post", post_path %>
+            <%= link_to "Edit Post", post_path(post), method: :edit %>
             </li>
             <li>
-              <%= link_to "Edit Post", post_path, method: :delete %>
+              <%= link_to "Delete Post", post_path(post), method: :delete %>
             </li>
             <li>
               <time>
