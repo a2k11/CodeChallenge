@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  before_filter :popular_tags
   protect_from_forgery
   helper_method :current_user, :signed_in, :is_admin
 
@@ -16,6 +17,10 @@ class ApplicationController < ActionController::Base
     else
       false
     end
+  end
+
+  def popular_tags
+    @tags = ActsAsTaggableOn::Tag.most_used(10)
   end
 
   def signed_in

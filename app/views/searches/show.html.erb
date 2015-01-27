@@ -1,0 +1,13 @@
+<div class="searchcontainer">
+  <ul>
+    <% @posts.each do |post| %>
+      <li>
+        <div><%= link_to post.title, post_path(post), method: :get %></div>
+        <time><%= post.created_at.to_formatted_s(:day_month_year) %></time>
+      </li>
+      <li>
+        <% post.tag_list %>
+      </li>
+    <% end %>
+  </ul>
+</div>
