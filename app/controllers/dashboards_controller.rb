@@ -4,6 +4,7 @@ class DashboardsController < ApplicationController
 
   def admin
     @user = current_user
+    @posts = Post.all
   end
 
   def index
