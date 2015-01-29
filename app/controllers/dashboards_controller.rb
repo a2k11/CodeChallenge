@@ -4,7 +4,7 @@ class DashboardsController < ApplicationController
 
   def admin
     @user = current_user
-    @posts = Post.order(created_at: :desc).page params[:page]
+    @posts = Post.order(:created_at => :desc).page(params[:page]).per(5)
   end
 
   def index

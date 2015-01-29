@@ -4,7 +4,7 @@
   <div class="userposts">
     <h3>Users Blog Posts</h3>
     <div>
-      <%= render @posts %>
+      <%= render :partial => "admin", :collection => @posts, :as => :post %>
       <%= paginate @posts %>
     </div>
   </div>
