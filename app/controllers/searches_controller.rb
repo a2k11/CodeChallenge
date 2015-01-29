@@ -6,7 +6,6 @@ class SearchesController < ApplicationController
   end
 
   def tags
-    @posts = Post.tagged_with(params[:tag])
-                 .paginate(:page => params[:page], :per_page => 10)
+    @posts = Post.tagged_with(params[:tag]).page(params[:page]).per(4)
   end
 end
