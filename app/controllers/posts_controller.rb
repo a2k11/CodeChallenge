@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
-  before_filter :authenticate_user, only: [:new, :create, :destroy]
+  before_filter :authenticate_user
+  before_filter :authorize_user, only: [:delete]
 
   def index
     @posts = Post.page(params[:page]).per(10).where(draft:false)
@@ -51,7 +52,7 @@ class PostsController < ApplicationController
     @post = Post.find_by_slug(params[:slug])
     @post.destroy
 
-    redirect_to dashboard_path
+    redirect_to :back
   end
 
   private
@@ -63,6 +64,12 @@ class PostsController < ApplicationController
       (params[:post][:tag_list]).to_s.split(/\s+/).each do |tag|
         @post.tag_list.add(tag.downcase).uniq
       end
+    end
+  end
+
+  def authorize_user
+    unless (@post.user_id == current_user.id || is_admin)
+      redirect_to :back
     end
   end
 end

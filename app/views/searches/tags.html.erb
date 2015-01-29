@@ -1,13 +1,21 @@
 <div class="searchcontainer">
   <ul>
     <% @posts.each do |post| %>
-      <li>
-        <div><%= link_to post.title, post_path(post), method: :get %></div>
-        <time><%= post.created_at.to_formatted_s(:day_month_year) %></time>
-      </li>
-      <li>
-        <%= post.tag_list %>
-      </li>
+      <fieldset>
+        <li>
+          <div>Post Title:
+            <%= link_to post.title, post_path(post), method: :get %></div>
+          Post Created At: 
+          <time><%= post.created_at.to_formatted_s(:day_month_year) %></time>
+        </li>
+        <li>
+          Tags For Post: <%= post.tag_list %>
+        </li>
+        <li>
+          Created By: <%= link_to post.user.username, user_path(post.user) %>
+        </li>
+      </fieldset>
     <% end %>
   </ul>
+  <%= paginate @posts %>
 </div>

@@ -1,17 +1,41 @@
-<div class="innercontainer">
+<div class="contentcontainer">
+  <h2> <%= " #{@user.username}'s Page" %> </h2>
 
-<ul>
-  <li>
-  <%= link_to "twitter", "http://twitter.com/#{current_user.twitter}" %>
-  </li>
-  <li>
-  <%= link_to "github", "https://github.com/#{current_user.github}" %>
-  </li>
-  <li>
-  <%= link_to "email", "mailto:#{current_user.email}?subject:hello" %>
-  </li>
-  <li>
-  <%= link_to "rss feed", "/posts.rss" %>
-  </li>
-</ul>
+  <div>
+    <div class="links">
+      <h3>Your Links</h3>
+      <div>
+        <%= link_to "Twitter: #{@user.twitter}" %>
+      </div>
+      <div>
+        <%= link_to "github", "https://github.com/#{@user.github}" %>
+      </div>
+      <div>
+        <%= link_to "email", "mailto:#{@user.email}?subject:hello" %>
+      </div>
+      <div>
+        <%= link_to "rss feed", "/posts.rss" %>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="userposts">
+    <h3><%="#{@user.username}'s Blog Posts" %></h3>
+    <ul>
+      <% @posts.each do |post| %>
+        <fieldset>
+          <li>
+            Post Title: <%= link_to post.title, post_path(post) %>
+          </li>
+          <li>
+            Post Created At: <time>
+              <%= post.created_at.to_formatted_s(:day_month_year) %>
+            </time>
+          </li>
+        </fieldset>
+      <% end %>
+      <%= paginate @posts %>
+    </ul>
+  </div>
 </div>

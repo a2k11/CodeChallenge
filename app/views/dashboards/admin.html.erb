@@ -3,22 +3,9 @@
 
   <div class="userposts">
     <h3>Users Blog Posts</h3>
-    <ul>
-      <% @posts.each do |post| %>
-        <fieldset>
-          <li>
-            <%= link_to post.title, post_path(post) %>
-          </li>
-          <li>
-            <%= link_to "Delete Post", post_path(post), method: :delete %>
-          </li>
-          <li>
-            <time>
-              <%= post.created_at.to_formatted_s(:day_month_year) %>
-            </time>
-          </li>
-        </fieldset>
-      <% end %>
-    </ul>
+    <div>
+      <%= render :partial => "admin", :collection => @posts, :as => :post %>
+      <%= paginate @posts %>
+    </div>
   </div>
 </div>
