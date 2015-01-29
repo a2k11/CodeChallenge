@@ -5,10 +5,13 @@
       <ul>
         <fieldset>
           <li>
-            <%= post.title %>
+            <div>Post Title:
+              <%= link_to post.title, post_path(post), method: :get %></div>
+            Post Created At: 
+            <time><%= post.created_at.to_formatted_s(:day_month_year) %></time>
           </li>
           <li>
-            <%= link_to post.slug, post_path(post), method: :delete %>
+            <%= link_to "Delete Post", post_path(post), method: :delete %>
           </li>
       </ul>
   </div>
