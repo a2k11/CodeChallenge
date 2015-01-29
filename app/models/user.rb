@@ -8,7 +8,4 @@ class User < ActiveRecord::Base
   validates :password, presence: { on: :create }
   validates :username, presence: true, uniqueness: true
 
-  def to_param
-    username
-  end
 end
