@@ -11,6 +11,9 @@
         <li>
           Tags For Post: <%= post.tag_list %>
         </li>
+        <li>
+          Created By: <%= link_to post.user.username, user_path(post.user) %>
+        </li>
       </fieldset>
     <% end %>
   </ul>

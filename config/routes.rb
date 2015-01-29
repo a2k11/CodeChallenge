@@ -7,7 +7,7 @@ TestApp::Application.routes.draw do
     end
   end
   resource :session, only: [:new, :create, :destroy]
-  resources :users, only: [:new, :create, :update]
+  resources :users, only: [:new, :create, :update, :show]
 
   match "/admin", to: "dashboards#admin"
   match "/dashboard", to: "dashboards#index"

@@ -18,6 +18,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def show
+    @user = User.find(params[:id])
+    @posts = @user.posts.page(params[:page]).per(4)
+  end
+
   def update
     user = User.find(params[:id])
 
