@@ -9,6 +9,6 @@ class DashboardsController < ApplicationController
 
   def index
     @user = current_user
-    @posts = current_user.posts
+    @posts = current_user.posts.page(params[:page]).per(5)
   end
 end
