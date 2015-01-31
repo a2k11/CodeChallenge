@@ -1,8 +1,9 @@
 class SearchesController < ApplicationController
   def show
-    @posts = Post.find(:all, :conditions =>
-                       ["content LIKE ? And title LIKE ?",
+    searchposts = Post.find(:all, :conditions =>
+                       ["content LIKE ? Or title LIKE ?",
                         "%#{params[:search]}%","%#{params[:search]}%"])
+    @posts = Kaminari.paginate_array(searchposts).page(params[:page]).per(5)
   end
 
   def tags

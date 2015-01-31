@@ -58,7 +58,7 @@ class PostsController < ApplicationController
   private
 
   def generate_tags
-    if params[:post][:tag_list].exists?
+    if params[:post][:tag_list]
       @post.tag_list.remove(params[:post][:tag_list])
 
       (params[:post][:tag_list]).to_s.split(/\s+/).each do |tag|
