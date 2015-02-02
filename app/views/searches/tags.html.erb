@@ -12,7 +12,7 @@
           Tags For Post: <%= post.tag_list %>
         </li>
         <li>
-          Created By: <%= link_to post.user.username, user_path(post.user) %>
+          Created By: <%= link_to post.user.username, post.user %>
         </li>
       </fieldset>
     <% end %>
